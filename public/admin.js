@@ -27,7 +27,7 @@ function renderProduk() {
     el.innerHTML = `
       <img src="${item.img}" alt="${item.nama}">
       <h3>${item.nama}</h3>
-      ${item.harga !== undefined && !item.paket ? `<p><strong>Harga:</strong> ${hargaText}</p>` : ''}
+      ${item.harga !== undefined && (!item.paket || item.paket.length === 0) ? `<p><strong>Harga:</strong> ${hargaText}</p>` : ''}
       ${paketText ? `<p><strong>Paket:</strong><br>${paketText}</p>` : ''}
       <button onclick="editProduk(${index})">Edit</button>
       <button onclick="hapusProduk(${index})" style="margin-left:10px; background:#cc3344">Hapus</button>
@@ -59,9 +59,9 @@ function editProduk(index) {
   openForm(true);
   document.getElementById('formTitle').textContent = 'Edit Produk';
   document.getElementById('editIndex').value = index;
-  document.getElementById('nama').value = p.nama;
-  document.getElementById('img').value = p.img;
-  document.getElementById('harga').value = p.harga || '';
+  document.getElementById('nama').value = p.nama || '';
+  document.getElementById('img').value = p.img || '';
+  document.getElementById('harga').value = p.harga !== undefined ? p.harga : '';
 
   if (Array.isArray(p.paket)) {
     document.getElementById('paket').value = p.paket
