@@ -65,8 +65,8 @@ function editProduk(index) {
 
   if (Array.isArray(p.paket)) {
     document.getElementById('paket').value = p.paket
-      .map(p => `${p.name}:${p.harga}`)
-      .join(', ');
+      .map(x => `${x.name} - ${x.harga}`)
+      .join('\n');
   } else if (typeof p.paket === 'string') {
     document.getElementById('paket').value = p.paket;
   } else {
@@ -96,18 +96,24 @@ async function handleFormSubmit(e) {
 
   const paketRaw = document.getElementById('paket').value;
   const paketArr = paketRaw
-    ? paketRaw.split(',').map(p => {
-        const [name, harga] = p.split(':').map(x => x.trim());
-        return { name, harga: parseInt(harga) || 0 };
-      }).filter(p => p.name && !isNaN(p.harga))
+    ? paketRaw.split('\n').map(p => {
+        let [name, harga] = p.split('-');
+        if (!name || !harga) return null;
+        name = name.trim();
+        harga = harga.replace(/\D/g, '');
+        harga = parseInt(harga);
+        if (!name || isNaN(harga)) return null;
+        return { name, harga };
+      }).filter(p => p !== null)
     : [];
+
+  const hargaInput = document.getElementById('harga').value;
+  const harga = hargaInput ? parseInt(hargaInput.replace(/\D/g, '')) : undefined;
 
   const payload = {
     nama: document.getElementById('nama').value,
     img: document.getElementById('img').value,
-    harga: document.getElementById('harga').value
-      ? parseInt(document.getElementById('harga').value)
-      : undefined,
+    harga: harga,
     paket: paketArr.length > 0 ? paketArr : undefined
   };
 

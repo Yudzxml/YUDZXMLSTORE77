@@ -8,19 +8,19 @@
 </head>
 <body>
   <!-- Login Form -->
-  <div id="loginForm" class="fullpage" style="display: none;">
+  <div id="loginForm" class="fullpage" style="display: none; flex-direction: column; justify-content: center; align-items: center;">
     <h2>Login Admin</h2>
-    <form onsubmit="return handleLogin(event)">
+    <form onsubmit="return handleLogin(event)" style="display: flex; flex-direction: column; width: 300px;">
       <label>Username:</label>
       <input type="text" id="username" required />
       <label>Password:</label>
       <input type="password" id="password" required />
-      <button type="submit">Login</button>
+      <button type="submit" style="margin-top: 1rem;">Login</button>
     </form>
   </div>
 
   <!-- Admin Panel -->
-  <div id="adminPanel" style="display: none;">
+  <div id="adminPanel" style="display: none; padding: 1rem; max-width: 900px; margin: auto;">
     <h1 class="neon">Panel Admin Produk</h1>
     <p class="subtitle">Kelola produk jualan kamu di sini</p>
 
@@ -29,10 +29,10 @@
     <hr />
 
     <!-- Form Tambah/Edit Produk -->
-    <div class="fullpage" id="productForm" style="display:none">
-      <button id="closeFormBtn" onclick="closeForm()">×</button>
-      <h2 id="formTitle">Tambah Produk</h2>
-      <form onsubmit="handleFormSubmit(event)">
+    <div class="fullpage" id="productForm" style="display:none; flex-direction: column; max-width: 600px; margin: auto; background: #111; padding: 1rem; border-radius: 8px; position: relative;">
+      <button id="closeFormBtn" onclick="closeForm()" style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; background: transparent; border: none; color: #fff; cursor: pointer;">×</button>
+      <h2 id="formTitle" style="margin-bottom: 1rem;">Tambah Produk</h2>
+      <form onsubmit="handleFormSubmit(event)" style="display: flex; flex-direction: column;">
         <input type="hidden" id="editIndex" />
         <label>Nama Produk:</label>
         <input type="text" id="nama" required />
@@ -43,25 +43,26 @@
         <label>Paket (opsional):</label>
         <textarea 
           id="paket" 
-          placeholder="Contoh: 10 Hari:5000, 1 Bulan:15000, Permanen:70000"
-          rows="3"
-          style="resize: vertical"
+          placeholder="Contoh:\nPANEL PTERODACTYL - 12000\nSCRIPT BOT - 50000"
+          rows="4"
+          style="resize: vertical; font-family: monospace;"
         ></textarea>
         <small style="color: #ccc; font-size: 0.85em; display:block; margin-top:5px;">
-          Format: <code>Nama Paket:Harga</code>, pisahkan dengan koma jika lebih dari satu.<br>
-          Contoh: <code>Basic:30000, Premium:50000</code>
+          Format: <code>Nama Paket - Harga</code>, satu paket per baris.<br>
+          Contoh:<br>
+          <code>PANEL PTERODACTYL - 12000<br>SCRIPT BOT - 50000</code>
         </small>
-        <button type="submit">Simpan</button>
+        <button type="submit" style="margin-top: 1rem;">Simpan</button>
       </form>
     </div>
 
     <!-- Tombol Tambah dan Logout -->
     <div style="text-align: center; margin: 2rem 0;">
       <button onclick="openForm()">+ Tambah Produk</button>
-      <button onclick="logout()" style="margin-left: 1rem; background: #cc3344;">Logout</button>
+      <button onclick="logout()" style="margin-left: 1rem; background: #cc3344; color: white;">Logout</button>
     </div>
 
-    <footer>© 2025 YUDZXML STORE 77</footer>
+    <footer style="text-align: center; color: #666; margin-top: 2rem;">© 2025 YUDZXML STORE 77</footer>
   </div>
 
   <!-- Script -->
