@@ -96,7 +96,6 @@ function sendToWhatsApp(event) {
 
   let pesan = `Halo Admin, saya ingin order:\n\nNama: ${nama}\nProduk: ${produk}`;
   if (paket) pesan += `\nPaket/Spesifikasi: ${paket}`;
-  pesan += `\nHarga: ${harga}`;
 
   const waUrl = `https://wa.me/6283872031397?text=${encodeURIComponent(pesan)}`;
   window.open(waUrl, "_blank");
@@ -104,3 +103,9 @@ function sendToWhatsApp(event) {
 
 // Submit form checkout
 checkoutForm.addEventListener('submit', sendToWhatsApp);
+
+const audioPlayer = document.getElementById('audio-player');
+
+window.addEventListener('click', function() {
+  audioPlayer.play();
+});
