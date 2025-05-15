@@ -9,22 +9,26 @@ async function fetchProduk() {
 function renderProduk() {
   const container = document.getElementById('productList');
   container.innerHTML = '';
-  produk.forEach((item, index) => {
-    // Paket ditampilkan sebagai string, jika array di-join pakai koma
-    const paketText = Array.isArray(item.paket)
-      ? item.paket.join(', ')
-      : (typeof item.paket === 'string' ? item.paket : '');
 
-    // Harga default kalau undefined
-    const hargaText = item.harga !== undefined ? item.harga : '-';
+  produk.forEach((item, index) => {
+    let paketText = '';
+    if (Array.isArray(item.paket)) {
+      paketText = item.paket
+        .map(p => `${p.name} - Rp ${p.harga.toLocaleString()}`)
+        .join('<br>');
+    } else if (typeof item.paket === 'string') {
+      paketText = item.paket;
+    }
+
+    const hargaText = item.harga !== undefined ? `Rp ${item.harga.toLocaleString()}` : '-';
 
     const el = document.createElement('div');
     el.className = 'card';
     el.innerHTML = `
       <img src="${item.img}" alt="${item.nama}">
       <h3>${item.nama}</h3>
-      <p><strong>Harga:</strong> ${hargaText}</p>
-      ${paketText ? `<p><strong>Paket:</strong> ${paketText}</p>` : ''}
+      ${item.harga !== undefined && !item.paket ? `<p><strong>Harga:</strong> ${hargaText}</p>` : ''}
+      ${paketText ? `<p><strong>Paket:</strong><br>${paketText}</p>` : ''}
       <button onclick="editProduk(${index})">Edit</button>
       <button onclick="hapusProduk(${index})" style="margin-left:10px; background:#cc3344">Hapus</button>
     `;
@@ -57,11 +61,12 @@ function editProduk(index) {
   document.getElementById('editIndex').value = index;
   document.getElementById('nama').value = p.nama;
   document.getElementById('img').value = p.img;
-  document.getElementById('harga').value = p.harga;
+  document.getElementById('harga').value = p.harga || '';
 
-  // Ubah paket ke string dengan koma jika array
   if (Array.isArray(p.paket)) {
-    document.getElementById('paket').value = p.paket.join(', ');
+    document.getElementById('paket').value = p.paket
+      .map(p => `${p.name}:${p.harga}`)
+      .join(', ');
   } else if (typeof p.paket === 'string') {
     document.getElementById('paket').value = p.paket;
   } else {
@@ -89,17 +94,21 @@ async function handleFormSubmit(e) {
   e.preventDefault();
   const index = document.getElementById('editIndex').value;
 
-  // Ubah paket dari string ke array dengan memisahkan koma
   const paketRaw = document.getElementById('paket').value;
   const paketArr = paketRaw
-    ? paketRaw.split(',').map(p => p.trim()).filter(Boolean)
+    ? paketRaw.split(',').map(p => {
+        const [name, harga] = p.split(':').map(x => x.trim());
+        return { name, harga: parseInt(harga) || 0 };
+      }).filter(p => p.name && !isNaN(p.harga))
     : [];
 
   const payload = {
     nama: document.getElementById('nama').value,
     img: document.getElementById('img').value,
-    harga: document.getElementById('harga').value,
-    paket: paketArr
+    harga: document.getElementById('harga').value
+      ? parseInt(document.getElementById('harga').value)
+      : undefined,
+    paket: paketArr.length > 0 ? paketArr : undefined
   };
 
   const method = index === '' ? 'POST' : 'PUT';
