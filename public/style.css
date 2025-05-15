@@ -52,23 +52,6 @@ h1.neon {
   margin: 0 auto;
 }
 
-.img-wrapper {
-  padding: 8px;
-  background: var(--card-bg);
-  border-radius: 16px;
-  box-shadow: 0 6px 15px rgba(10, 132, 255, 0.6);
-  margin-bottom: 0.8rem;
-  max-width: 100%;
-}
-
-.img-wrapper img {
-  display: block;
-  width: 100%;
-  height: 140px;
-  object-fit: contain;
-  border-radius: 12px;
-}
-
 /* Card produk */
 .card {
   background: var(--card-bg);
@@ -91,6 +74,24 @@ h1.neon {
   object-fit: contain;
   border-radius: 8px;
   margin-bottom: 0.8rem;
+}
+
+.img-wrapper {
+  padding: 6px; /* sedikit lebih kecil dari 8px biar lebih pas */
+  background: var(--card-bg);
+  border-radius: 14px; /* sedikit lebih kecil dari 16px, supaya gak kebesaran */
+  box-shadow: 0 4px 12px rgba(10, 132, 255, 0.7);
+  margin-bottom: 0.8rem;
+  max-width: 100%;
+  display: inline-block; /* supaya lebar ngikutin gambar */
+}
+
+.img-wrapper img {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 10px; /* sesuaikan supaya masuk dalam border wrapper */
 }
 
 /* Tombol umum */
