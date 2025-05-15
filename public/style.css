@@ -52,37 +52,45 @@ h1.neon {
   margin: 0 auto;
 }
 
+.img-wrapper {
+  padding: 8px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(10, 132, 255, 0.6);
+  margin-bottom: 0.8rem;
+  max-width: 100%;
+}
+
+.img-wrapper img {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
 /* Card produk */
 .card {
   background: var(--card-bg);
   border: 1px solid var(--accent2);
-  border-radius: 16px;      /* buat lebih melengkung */
+  border-radius: 12px;
   padding: 1rem;
-  box-shadow: 0 0 12px #0a84ff77; /* sedikit lebih nge-glow */
+  box-shadow: 0 0 8px #0a84ff55;
   text-align: center;
   transition: all 0.3s ease;
-  overflow: hidden;         /* supaya gambar nggak keluar batas */
 }
 
 .card:hover {
   transform: scale(1.06);
-  box-shadow: 0 0 20px var(--accent), 0 0 35px var(--accent2);
+  box-shadow: 0 0 15px var(--accent), 0 0 25px var(--accent2);
 }
 
 .card img {
   width: 100%;
   height: 140px;
   object-fit: contain;
-  border-radius: 16px;        /* samakan dengan card */
+  border-radius: 8px;
   margin-bottom: 0.8rem;
-  box-shadow: 0 6px 15px rgba(10, 132, 255, 0.6); /* efek “mengambang” */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: block;
-}
-
-.card img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(10, 132, 255, 0.85);
 }
 
 /* Tombol umum */

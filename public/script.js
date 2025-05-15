@@ -23,11 +23,30 @@ async function renderProduk() {
     produkList.forEach((produk, index) => {
       const card = document.createElement("div");
       card.className = "card";
-      card.innerHTML = `
-        <img src="${produk.img}" alt="${produk.nama}" />
-        <h3>${produk.nama}</h3>
-        <button onclick="bukaFormCheckout(${index})">CHECKOUT</button>
-      `;
+
+      // Bikin wrapper untuk gambar
+      const imgWrapper = document.createElement("div");
+      imgWrapper.className = "img-wrapper";
+
+      const img = document.createElement("img");
+      img.src = produk.img;
+      img.alt = produk.nama;
+
+      // Masukkan img ke wrapper
+      imgWrapper.appendChild(img);
+
+      // Masukkan wrapper dan elemen lain ke card
+      card.appendChild(imgWrapper);
+
+      const h3 = document.createElement("h3");
+      h3.textContent = produk.nama;
+      card.appendChild(h3);
+
+      const btn = document.createElement("button");
+      btn.textContent = "CHECKOUT";
+      btn.onclick = () => bukaFormCheckout(index);
+      card.appendChild(btn);
+
       produkContainer.appendChild(card);
     });
   } catch (e) {
