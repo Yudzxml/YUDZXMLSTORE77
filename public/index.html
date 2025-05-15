@@ -99,15 +99,17 @@
         <label for="namaPembeli">Nama Kamu:</label>
         <input type="text" id="namaPembeli" name="namaPembeli" required />
 
-       <label for="produkDipilih">Produk:</label>
-       <input type="text" id="produkDipilih" name="produkDipilih" readonly />
-        <p id="produkDeskripsi" style="color:#ccc; font-size: 0.9em; margin-top: -8px; margin-bottom: 10px;"></p>
+<label for="produkDipilih">Produk:</label>
+<input type="text" id="produkDipilih" name="produkDipilih" readonly />
 
-        <label for="paketPilihan" id="labelPaket" class="hidden">Pilih Paket / Spesifikasi:</label>
-        <select id="paketPilihan" name="paketPilihan" class="hidden"></select>
+<label for="paketPilihan" id="labelPaket" class="hidden">Pilih Paket / Spesifikasi:</label>
+<select id="paketPilihan" name="paketPilihan" class="hidden"></select>
 
-        <label for="hargaProduk">Harga:</label>
-        <input type="text" id="hargaProduk" name="hargaProduk" readonly />
+<label>Deskripsi:</label>
+<div id="produkDeskripsi" style="min-height: 60px; color: var(--text-muted); margin-bottom: 1rem; white-space: pre-wrap;"></div>
+
+<label for="hargaProduk">Harga:</label>
+<input type="text" id="hargaProduk" name="hargaProduk" readonly />
 
         <button type="submit">Order via WhatsApp</button>
       </form>
