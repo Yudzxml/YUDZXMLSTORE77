@@ -1,9 +1,9 @@
 const https = require('https');
 
 const TOKEN = process.env.GITHUB_TOKEN;
-const REPO = process.env.GITHUB_REPO;
-const FILEPATH = process.env.GITHUB_FILEPATH;
-const BRANCH = process.env.GITHUB_BRANCH || 'main';
+const REPO = 'Yudzxml/WebClientV1';          // langsung di-set sesuai repo kamu
+const FILEPATH = 'products.json';             // langsung di-set sesuai path file JSON
+const BRANCH = 'main';
 
 function githubRequest(path, method = 'GET', data = null) {
   const options = {
@@ -55,9 +55,9 @@ function githubRequest(path, method = 'GET', data = null) {
 module.exports = async function handler(req, res) {
   console.log(`[handler] Incoming request method: ${req.method}`);
 
-  if (!TOKEN || !REPO || !FILEPATH) {
-    console.error('[handler] Missing GitHub env variables');
-    res.status(500).json({ error: 'Missing GitHub env variables' });
+  if (!TOKEN) {
+    console.error('[handler] Missing GITHUB_TOKEN env variable');
+    res.status(500).json({ error: 'Missing GitHub token' });
     return;
   }
 
