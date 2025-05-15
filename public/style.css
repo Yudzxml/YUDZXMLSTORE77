@@ -1,16 +1,14 @@
-/* Root variabel warna - tema maskulin gelap */
 :root {
   --bg-dark: #121212;
   --card-bg: #1f2228;
-  --accent: #0a84ff;       /* biru cerah */
-  --accent2: #0050aa;      /* biru tua */
-  --text-light: #d0d6e3;   /* abu terang */
-  --text-muted: #7a8a99;   /* abu ke biruan */
-  --input-bg: #2b2f3a;     /* abu gelap */
-  --border-color: #0a84ff; /* biru */
+  --accent: #0a84ff;
+  --accent2: #0050aa;
+  --text-light: #d0d6e3;
+  --text-muted: #7a8a99;
+  --input-bg: #2b2f3a;
+  --border-color: #0a84ff;
 }
 
-/* Reset dasar */
 * {
   box-sizing: border-box;
 }
@@ -43,17 +41,15 @@ h1.neon {
   margin-bottom: 2rem;
 }
 
-/* Grid produk */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.2rem;
+  gap: 1rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 2rem;
 }
 
-/* Card produk */
+/* CARD RAPI + TOMBOL BAWAH */
 .card {
   background: var(--card-bg);
   border: 1px solid var(--accent2);
@@ -62,11 +58,10 @@ h1.neon {
   box-shadow: 0 0 8px #0a84ff55;
   text-align: center;
   transition: all 0.3s ease;
-
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  height: 100%; /* agar isi diatur fleksibel */
+  justify-content: space-between;
+  height: 100%;
 }
 
 .card:hover {
@@ -74,25 +69,38 @@ h1.neon {
   box-shadow: 0 0 15px var(--accent), 0 0 25px var(--accent2);
 }
 
+.card h3 {
+  margin: 0.5rem 0 1rem;
+  flex-grow: 1;
+}
+
 .card img {
   width: 100%;
   height: 140px;
-  object-fit: cover; /* penuh, tidak ada ruang sisa */
-  border-radius: 14px;
-  background: var(--card-bg); /* pindah background ke sini */
-  box-shadow: 0 4px 12px rgba(10, 132, 255, 0.7);
-  padding: 6px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
 }
 
 .img-wrapper {
-  background: transparent; /* hapus bg, pindah ke img */
+  background: transparent;
   margin-bottom: 0.8rem;
   max-width: 100%;
   display: inline-block;
 }
 
-.card button {
-  margin-top: auto;
+.img-wrapper img {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 12px rgba(10, 132, 255, 0.7);
+  padding: 6px;
+}
+
+button {
   background: linear-gradient(45deg, var(--accent), var(--accent2));
   border: none;
   border-radius: 8px;
@@ -105,13 +113,12 @@ h1.neon {
   transition: all 0.3s ease;
 }
 
-.card button:hover {
+button:hover {
   transform: scale(1.05);
   background: linear-gradient(45deg, #0066ff, #003d99);
   box-shadow: 0 0 15px #0066ffbb, 0 0 30px #003d9977;
 }
 
-/* Form checkout */
 .fullpage {
   position: fixed;
   top: 50%;
@@ -139,7 +146,6 @@ h1.neon {
   text-shadow: 0 0 4px var(--accent), 0 0 8px var(--accent2);
 }
 
-/* Tutup form */
 #closeFormBtn {
   position: absolute;
   top: 0.5rem;
@@ -163,7 +169,6 @@ h1.neon {
   transform: scale(1.1);
 }
 
-/* Form umum */
 form {
   display: flex;
   flex-direction: column;
@@ -216,7 +221,6 @@ label {
   color: var(--text-muted);
 }
 
-/* Deskripsi produk */
 #produkDeskripsi {
   background: #1f2228;
   border: 1px solid var(--accent2);
@@ -233,14 +237,12 @@ label {
   white-space: pre-wrap;
 }
 
-/* Label paket dinamis */
 #labelPaket {
   display: block;
   font-size: 1rem;
   margin-top: 0.5rem;
 }
 
-/* Harga Produk Readonly */
 #hargaProduk {
   font-weight: bold;
   font-size: 1.1rem;
@@ -252,7 +254,6 @@ label {
   margin-top: -0.5rem;
 }
 
-/* Tombol submit form checkout */
 form button[type="submit"] {
   margin-top: 1rem;
   background: linear-gradient(45deg, #0aff91, #00a88f);
@@ -264,24 +265,20 @@ form button[type="submit"]:hover {
   box-shadow: 0 0 15px #00ffa788;
 }
 
-/* Garis pisah */
 hr {
   border: none;
   border-top: 1px solid var(--accent2);
   margin: 1rem 0;
 }
 
-/* Sembunyikan */
 .hidden {
   display: none !important;
 }
 
-/* Nonaktif scroll saat form aktif */
 body.form-active {
   overflow: hidden;
 }
 
-/* Footer */
 footer {
   text-align: center;
   padding: 1rem 0;
@@ -290,7 +287,6 @@ footer {
   margin-top: 2rem;
 }
 
-/* Responsive kecil */
 @media (max-width: 650px) {
   .fullpage {
     max-width: 95%;
