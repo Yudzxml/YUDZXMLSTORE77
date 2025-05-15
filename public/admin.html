@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Produk</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="loginForm" class="fullpage" style="display: none;">
+    <h2>Login Admin</h2>
+    <form onsubmit="return handleLogin(event)">
+      <label>Username:</label>
+      <input type="text" id="username" required />
+      <label>Password:</label>
+      <input type="password" id="password" required />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div id="adminPanel" style="display: none;">
+    <h1 class="neon">Panel Admin Produk</h1>
+    <p class="subtitle">Kelola produk jualan kamu di sini</p>
+
+    <section class="grid-container" id="productList"></section>
+
+    <hr />
+    <div class="fullpage" id="productForm" style="display:none">
+      <button id="closeFormBtn" onclick="closeForm()">×</button>
+      <h2 id="formTitle">Tambah Produk</h2>
+      <form onsubmit="handleFormSubmit(event)">
+        <input type="hidden" id="editIndex" />
+        <label>Nama Produk:</label>
+        <input type="text" id="nama" required />
+        <label>Link Gambar:</label>
+        <input type="text" id="img" required />
+        <label>Harga Produk:</label>
+        <input type="text" id="harga" required />
+        <label>Paket (opsional):</label>
+        <textarea id="paket" placeholder="Pisahkan dengan koma jika banyak"></textarea>
+        <button type="submit">Simpan</button>
+      </form>
+    </div>
+
+    <div style="text-align: center; margin: 2rem 0;">
+      <button onclick="openForm()">+ Tambah Produk</button>
+      <button onclick="logout()" style="margin-left: 1rem; background: #cc3344;">Logout</button>
+    </div>
+
+    <footer>© 2025 YUDZXML STORE 77</footer>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    const adminUsername = "Yudzxml";
+    const adminPassword = "ADMINYUDZXML";
+
+    function setCookie(name, value, days) {
+      const expires = new Date(Date.now() + days * 864e5).toUTCString();
+      document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    }
+
+    function getCookie(name) {
+      return document.cookie.split('; ').reduce((r, v) => {
+        const parts = v.split('=');
+        return parts[0] === name ? decodeURIComponent(parts[1]) : r
+      }, '');
+    }
+
+    function checkLogin() {
+      if (getCookie("adminLogin") === "true") {
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        fetchProduk();
+      } else {
+        document.getElementById("loginForm").style.display = "flex";
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      if (user === adminUsername && pass === adminPassword) {
+        setCookie("adminLogin", "true", 1);
+        checkLogin();
+      } else {
+        alert("Username atau password salah!");
+      }
+    }
+
+    function logout() {
+      setCookie("adminLogin", "false", -1);
+      location.reload();
+    }
+
+    checkLogin();
+  </script>
+</body>
+</html>

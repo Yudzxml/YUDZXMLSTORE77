@@ -1,4 +1,3 @@
-/* Root variabel warna */
 :root {
   --bg-dark: #121212;
   --card-bg: #1d1b1f;
@@ -10,7 +9,6 @@
   --border-color: #aa66ff;
 }
 
-/* Reset dasar */
 * {
   box-sizing: border-box;
 }
@@ -43,7 +41,6 @@ h1.neon {
   margin-bottom: 2rem;
 }
 
-/* Grid produk */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -52,7 +49,6 @@ h1.neon {
   margin: 0 auto;
 }
 
-/* Card produk */
 .card {
   background: var(--card-bg);
   border: 1px solid var(--accent);
@@ -76,7 +72,6 @@ h1.neon {
   margin-bottom: 0.8rem;
 }
 
-/* Tombol umum */
 button {
   background: linear-gradient(45deg, var(--accent), var(--accent2));
   border: none;
@@ -95,7 +90,6 @@ button:hover {
   box-shadow: 0 0 15px #ff33aa99, 0 0 30px #4444ff77;
 }
 
-/* Form checkout */
 .fullpage {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -112,7 +106,6 @@ button:hover {
   box-shadow: 0 0 20px #ff66cc44;
 }
 
-/* Tutup form */
 #closeFormBtn {
   align-self: flex-end;
   background: none;
@@ -133,7 +126,6 @@ button:hover {
   color: #ff33aa;
 }
 
-/* Form umum */
 form {
   display: flex;
   flex-direction: column;
@@ -179,14 +171,12 @@ label {
   color: var(--text-muted);
 }
 
-/* Label paket dinamis */
 #labelPaket {
   display: block;
   font-size: 1rem;
   margin-top: 0.5rem;
 }
 
-/* Harga Produk Readonly */
 #hargaProduk {
   font-weight: bold;
   font-size: 1.1rem;
@@ -198,7 +188,6 @@ label {
   margin-top: -0.5rem;
 }
 
-/* Tombol submit form checkout */
 form button[type="submit"] {
   margin-top: 1rem;
   background: linear-gradient(45deg, #33ffaa, #66aaff);
@@ -210,24 +199,20 @@ form button[type="submit"]:hover {
   box-shadow: 0 0 15px #33ffaaaa;
 }
 
-/* Garis pisah */
 hr {
   border: none;
   border-top: 1px solid var(--accent2);
   margin: 1rem 0;
 }
 
-/* Sembunyikan */
 .hidden {
   display: none !important;
 }
 
-/* Nonaktif scroll saat form aktif */
 body.form-active {
   overflow: hidden;
 }
 
-/* Footer */
 footer {
   text-align: center;
   padding: 1rem 0;
@@ -236,7 +221,6 @@ footer {
   margin-top: 2rem;
 }
 
-/* Responsive kecil */
 @media (max-width: 650px) {
   .fullpage {
     max-width: 95%;

@@ -37,106 +37,11 @@
         <button type="submit">Order via WhatsApp</button>
       </form>
     </section>
-
-    <!-- Form Tambah Produk -->
-    <section id="addProductForm" class="hidden fullpage">
-      <form id="formTambahProduk" onsubmit="tambahProdukBaru(event)">
-        <h2>Tambah Produk Baru</h2>
-
-        <label for="namaProdukBaru">Nama Produk:</label>
-        <input type="text" id="namaProdukBaru" name="namaProdukBaru" required />
-
-        <label for="imgProdukBaru">URL Gambar:</label>
-        <input type="text" id="imgProdukBaru" name="imgProdukBaru" required />
-
-        <label for="paketProdukBaru">Paket Produk (opsional - satu per baris, format: Nama Paket - Harga):</label>
-        <textarea id="paketProdukBaru" name="paketProdukBaru" placeholder="Contoh:
-RAM 1GB CPU 1 - 20000
-RAM 2GB CPU 2 - 30000"></textarea>
-
-        <label for="hargaProdukBaru">Harga Produk (opsional jika tidak pakai paket):</label>
-        <input type="number" id="hargaProdukBaru" name="hargaProdukBaru" />
-
-        <label for="formPassword">Password Admin:</label>
-        <input type="password" id="formPassword" name="formPassword" required />
-
-        <div class="button-group">
-          <button type="submit">Tambah Produk</button>
-          <button type="button" onclick="tutupAddProduk()">Batal</button>
-        </div>
-      </form>
-    </section>
-
-    <!-- Form Edit Produk -->
-    <section id="editProductForm" class="hidden fullpage">
-      <form id="formEditProduk" onsubmit="updateProduk(event)">
-        <h2>Edit Produk</h2>
-
-        <!-- Simpan index produk yang diedit -->
-        <input type="hidden" id="editIndexProduk" name="editIndexProduk" />
-
-        <label for="editNamaProdukLama">Nama Produk Lama:</label>
-        <input type="text" id="editNamaProdukLama" name="editNamaProdukLama" readonly />
-
-        <label for="editNamaProdukBaru">Nama Produk Baru:</label>
-        <input type="text" id="editNamaProdukBaru" name="editNamaProdukBaru" required />
-
-        <label for="editImgProduk">URL Gambar:</label>
-        <input type="text" id="editImgProduk" name="editImgProduk" required />
-
-        <label for="editPaketProduk">Paket Produk (opsional - satu per baris, format: Nama Paket - Harga):</label>
-        <textarea id="editPaketProduk" name="editPaketProduk" placeholder="Contoh:
-RAM 1GB CPU 1 - 20000
-RAM 2GB CPU 2 - 30000"></textarea>
-
-        <label for="editHargaProduk">Harga Produk (opsional jika tidak pakai paket):</label>
-        <input type="number" id="editHargaProduk" name="editHargaProduk" />
-
-        <label for="editFormPassword">Password Admin:</label>
-        <input type="password" id="editFormPassword" name="editFormPassword" required />
-
-        <div class="button-group">
-          <button type="submit">Update Produk</button>
-          <button type="button" onclick="tutupEditProduk()">Batal</button>
-        </div>
-      </form>
-    </section>
-
-    <!-- Form Hapus Produk -->
-    <section id="deleteProductForm" class="hidden fullpage">
-      <form id="formHapusProduk" onsubmit="hapusProdukSubmit(event)">
-        <h2>Hapus Produk</h2>
-
-        <!-- Simpan index produk yang dihapus -->
-        <input type="hidden" id="hapusIndexProduk" name="hapusIndexProduk" />
-
-        <label for="hapusNamaProduk">Nama Produk yang Ingin Dihapus:</label>
-        <input type="text" id="hapusNamaProduk" name="hapusNamaProduk" readonly />
-
-        <label for="hapusFormPassword">Password Admin:</label>
-        <input type="password" id="hapusFormPassword" name="hapusFormPassword" required />
-
-        <div class="button-group">
-          <button type="submit">Hapus Produk</button>
-          <button type="button" onclick="tutupHapusProduk()">Batal</button>
-        </div>
-      </form>
-    </section>
   </main>
 
   <footer>
     <p>&copy; 2025 <strong>YUDZXML STORE 77</strong> &mdash; MADE WITH <span style="color:#ff66cc;">&hearts;</span></p>
   </footer>
-
-  <!-- Tombol submenu mengambang -->
-  <div id="floatingMenu" class="floating-menu">
-    <button id="mainFloatingBtn" title="Menu Produk">≡</button>
-    <div id="submenuButtons" class="submenu hidden">
-      <button onclick="bukaDeleteProdukForm()" title="Hapus Produk">Hapus</button>
-      <button onclick="bukaAddProduk()" title="Tambah Produk">Tambah</button>
-      <button onclick="bukaEditProdukForm()" title="Edit Produk">Edit</button>
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
