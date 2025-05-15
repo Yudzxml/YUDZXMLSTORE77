@@ -77,21 +77,21 @@ h1.neon {
 }
 
 .img-wrapper {
-  padding: 6px; /* sedikit lebih kecil dari 8px biar lebih pas */
-  background: var(--card-bg);
-  border-radius: 14px; /* sedikit lebih kecil dari 16px, supaya gak kebesaran */
-  box-shadow: 0 4px 12px rgba(10, 132, 255, 0.7);
+  background: transparent; /* hapus bg, pindah ke img */
   margin-bottom: 0.8rem;
   max-width: 100%;
-  display: inline-block; /* supaya lebar ngikutin gambar */
+  display: inline-block;
 }
 
 .img-wrapper img {
   display: block;
   width: 100%;
   height: 140px;
-  object-fit: contain;
-  border-radius: 10px; /* sesuaikan supaya masuk dalam border wrapper */
+  object-fit: cover; /* penuh, tidak ada ruang sisa */
+  border-radius: 14px;
+  background: var(--card-bg); /* pindah background ke sini */
+  box-shadow: 0 4px 12px rgba(10, 132, 255, 0.7);
+  padding: 6px;
 }
 
 /* Tombol umum */
