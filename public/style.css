@@ -117,7 +117,9 @@ button:hover {
   align-self: flex-end;
   background: none;
   border: none;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   color: var(--accent);
   cursor: pointer;
   margin-bottom: 1rem;
@@ -127,6 +129,8 @@ button:hover {
   position: absolute;
   top: 1rem;
   right: 1.5rem;
+  padding: 0;
+  text-align: center;
 }
 
 #closeFormBtn:hover {
