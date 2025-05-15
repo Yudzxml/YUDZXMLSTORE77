@@ -45,35 +45,82 @@ body {
 
 #productList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  padding: 0 0.5rem;
 }
 
 .product-card {
   background: var(--card-bg);
-  border: 1px solid var(--accent);
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 0 8px var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 0 10px var(--accent);
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
 }
 
 .product-card:hover {
-  transform: scale(1.04);
-  box-shadow: 0 0 12px var(--accent), 0 0 24px #3399ff55;
+  transform: scale(1.06);
+  box-shadow: 0 0 16px var(--accent), 0 0 32px #3399ff77;
 }
 
 .product-card img {
   width: 100%;
-  height: 140px;
+  height: 160px;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 3px var(--accent));
+}
+
+.product-card h3 {
+  margin: 0.3rem 0 0.8rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 0 0 4px var(--accent);
+}
+
+.product-card p.description {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-card .price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent2);
   margin-bottom: 0.8rem;
 }
 
-/* Form tambah/edit produk */
+.product-card button {
+  background: linear-gradient(45deg, var(--accent2), var(--accent));
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 0.5rem 1.25rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--accent2);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.product-card button:hover {
+  background: linear-gradient(45deg, #0044cc, #3399ff);
+  box-shadow: 0 0 20px #0044cc, 0 0 40px #3399ff;
+  transform: scale(1.1);
+}
+
 #productForm.fullpage {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -141,10 +188,10 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   color: #aaddff;
-  padding: 0.4rem 0.6rem;        /* dikurangi padding */
-  font-size: 0.95rem;            /* sedikit lebih kecil */
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
   resize: vertical;
-  min-height: 45px;              /* lebih kecil dari sebelumnya */
+  min-height: 45px;
   transition: border-color 0.3s ease;
 }
 
@@ -174,7 +221,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Tombol tambah & logout */
 .buttons {
   text-align: center;
   margin: 2rem 0;
@@ -203,7 +249,6 @@ body {
   transform: scale(1.08);
 }
 
-/* Tombol logout spesifik */
 .logout-btn {
   background: linear-gradient(45deg, #ff4c4c, #cc0000);
   box-shadow: 0 0 12px #ff4c4c;
@@ -217,7 +262,6 @@ body {
   transform: scale(1.08);
 }
 
-/* Responsive */
 @media (max-width: 650px) {
   #productForm.fullpage {
     max-width: 95%;
@@ -225,7 +269,6 @@ body {
   }
 }
 
-/* Login Form */
 #loginForm {
   display: flex;
   flex-direction: column;
@@ -291,8 +334,8 @@ body {
 
 #loginForm button {
   margin-top: 1.5rem;
-  padding: 0.5rem 1rem;    /* dikurangi padding */
-  font-size: 1rem;        /* dikurangi font size */
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   font-weight: 700;
   border: none;
   border-radius: 12px;
