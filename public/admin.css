@@ -1,12 +1,12 @@
 :root {
   --bg-dark: #121212;
-  --card-bg: #1d1b1f;
-  --accent: #ff66cc;
-  --accent2: #6e6eff;
-  --text-light: #e0e0ff;
-  --text-muted: #ddaaff;
-  --input-bg: #2a2a2e;
-  --border-color: #aa66ff;
+  --card-bg: #1f242d; /* abu kebiruan gelap */
+  --accent: #3399ff; /* biru medium */
+  --accent2: #66ccff; /* biru muda cerah */
+  --text-light: #d0d8e8; /* abu terang kebiruan */
+  --text-muted: #7a90a9; /* abu biru kalem */
+  --input-bg: #2b3544; /* abu gelap ke biru */
+  --border-color: #4a90e2; /* biru soft */
 }
 
 * {
@@ -36,7 +36,7 @@ h1.neon {
 
 .subtitle {
   text-align: center;
-  color: #e0aaff;
+  color: var(--accent2);
   opacity: 0.8;
   margin-bottom: 2rem;
 }
@@ -54,14 +54,14 @@ h1.neon {
   border: 1px solid var(--accent);
   border-radius: 12px;
   padding: 1rem;
-  box-shadow: 0 0 8px #ff66cc44;
+  box-shadow: 0 0 8px #3399ff44;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
   transform: scale(1.04);
-  box-shadow: 0 0 12px #ff66ccaa, 0 0 24px #cc00ff55;
+  box-shadow: 0 0 12px #3399ffaa, 0 0 24px #66ccff55;
 }
 
 .card img {
@@ -80,20 +80,20 @@ button {
   font-weight: 600;
   padding: 0.6rem 1.2rem;
   cursor: pointer;
-  box-shadow: 0 0 10px #ff66cc88;
+  box-shadow: 0 0 10px #3399ff88;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
   transform: scale(1.05);
-  background: linear-gradient(45deg, #ff33aa, #4444ff);
-  box-shadow: 0 0 15px #ff33aa99, 0 0 30px #4444ff77;
+  background: linear-gradient(45deg, #2679d7, #99d6ff);
+  box-shadow: 0 0 15px #2679d799, 0 0 30px #99d6ff77;
 }
 
 .fullpage {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #19161d;
+  background-color: #1c2534;
   padding: 2rem;
   z-index: 9999;
   overflow-y: auto;
@@ -103,7 +103,7 @@ button:hover {
   margin: auto;
   border-radius: 12px;
   border: 2px solid var(--accent);
-  box-shadow: 0 0 20px #ff66cc44;
+  box-shadow: 0 0 20px #3399ff44;
 }
 
 #closeFormBtn {
@@ -123,7 +123,7 @@ button:hover {
 }
 
 #closeFormBtn:hover {
-  color: #ff33aa;
+  color: #2679d7;
 }
 
 form {
@@ -140,7 +140,7 @@ textarea {
   background: var(--input-bg);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  color: #f0ccff;
+  color: #b0c4de;
   padding: 0.5rem;
   font-size: 1rem;
 }
@@ -190,13 +190,13 @@ label {
 
 form button[type="submit"] {
   margin-top: 1rem;
-  background: linear-gradient(45deg, #33ffaa, #66aaff);
-  box-shadow: 0 0 10px #33ffaa88;
+  background: linear-gradient(45deg, #33cc99, #6699ff);
+  box-shadow: 0 0 10px #33cc9988;
 }
 
 form button[type="submit"]:hover {
-  background: linear-gradient(45deg, #22ddaa, #3399ff);
-  box-shadow: 0 0 15px #33ffaaaa;
+  background: linear-gradient(45deg, #22aa77, #3366cc);
+  box-shadow: 0 0 15px #33cc99aa;
 }
 
 hr {

@@ -1,13 +1,13 @@
-/* Root variabel warna */
+/* Root variabel warna - tema maskulin gelap */
 :root {
   --bg-dark: #121212;
-  --card-bg: #1d1b1f;
-  --accent: #ff66cc;
-  --accent2: #6e6eff;
-  --text-light: #e0e0ff;
-  --text-muted: #ddaaff;
-  --input-bg: #2a2a2e;
-  --border-color: #aa66ff;
+  --card-bg: #1f2228;
+  --accent: #0a84ff;       /* biru cerah */
+  --accent2: #0050aa;      /* biru tua */
+  --text-light: #d0d6e3;   /* abu terang */
+  --text-muted: #7a8a99;   /* abu ke biruan */
+  --input-bg: #2b2f3a;     /* abu gelap */
+  --border-color: #0a84ff; /* biru */
 }
 
 /* Reset dasar */
@@ -28,7 +28,7 @@ h1, h2, h3 {
   text-align: center;
   margin: 0.5rem 0;
   color: var(--accent);
-  text-shadow: 0 0 6px var(--accent), 0 0 12px var(--accent);
+  text-shadow: 0 0 6px var(--accent), 0 0 12px var(--accent2);
 }
 
 h1.neon {
@@ -38,8 +38,8 @@ h1.neon {
 
 .subtitle {
   text-align: center;
-  color: #e0aaff;
-  opacity: 0.8;
+  color: var(--text-muted);
+  opacity: 0.9;
   margin-bottom: 2rem;
 }
 
@@ -55,17 +55,17 @@ h1.neon {
 /* Card produk */
 .card {
   background: var(--card-bg);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--accent2);
   border-radius: 12px;
   padding: 1rem;
-  box-shadow: 0 0 8px #ff66cc44;
+  box-shadow: 0 0 8px #0a84ff55;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
   transform: scale(1.04);
-  box-shadow: 0 0 12px #ff66ccaa, 0 0 24px #cc00ff55;
+  box-shadow: 0 0 12px var(--accent2), 0 0 24px #00408055;
 }
 
 .card img {
@@ -85,21 +85,21 @@ button {
   font-weight: 600;
   padding: 0.6rem 1.2rem;
   cursor: pointer;
-  box-shadow: 0 0 10px #ff66cc88;
+  box-shadow: 0 0 10px #0a84ff88;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
   transform: scale(1.05);
-  background: linear-gradient(45deg, #ff33aa, #4444ff);
-  box-shadow: 0 0 15px #ff33aa99, 0 0 30px #4444ff77;
+  background: linear-gradient(45deg, #0066ff, #003d99);
+  box-shadow: 0 0 15px #0066ffbb, 0 0 30px #003d9977;
 }
 
 /* Form checkout */
 .fullpage {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #19161d;
+  background-color: #181c23;
   padding: 2rem;
   z-index: 9999;
   overflow-y: auto;
@@ -108,8 +108,8 @@ button:hover {
   max-width: 600px;
   margin: auto;
   border-radius: 12px;
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 20px #ff66cc44;
+  border: 2px solid var(--accent2);
+  box-shadow: 0 0 20px #0a84ff55;
 }
 
 /* Tutup form */
@@ -130,7 +130,7 @@ button:hover {
 }
 
 #closeFormBtn:hover {
-  color: #ff33aa;
+  color: #004080;
 }
 
 /* Form umum */
@@ -148,7 +148,7 @@ textarea {
   background: var(--input-bg);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  color: #f0ccff;
+  color: var(--text-light);
   padding: 0.5rem;
   font-size: 1rem;
 }
@@ -201,13 +201,13 @@ label {
 /* Tombol submit form checkout */
 form button[type="submit"] {
   margin-top: 1rem;
-  background: linear-gradient(45deg, #33ffaa, #66aaff);
-  box-shadow: 0 0 10px #33ffaa88;
+  background: linear-gradient(45deg, #0aff91, #00a88f);
+  box-shadow: 0 0 10px #0aff9188;
 }
 
 form button[type="submit"]:hover {
-  background: linear-gradient(45deg, #22ddaa, #3399ff);
-  box-shadow: 0 0 15px #33ffaaaa;
+  background: linear-gradient(45deg, #00dd76, #007f6d);
+  box-shadow: 0 0 15px #00ffa788;
 }
 
 /* Garis pisah */
