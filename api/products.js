@@ -22,22 +22,20 @@ function githubRequest(path, method = 'GET', data = null) {
       let body = '';
       res.on('data', chunk => body += chunk);
       res.on('end', () => {
-        if (res.statusCode >= 200 && res.statusCode < 300) {
-          try {
-            const json = JSON.parse(body || '{}');
+        try {
+          const json = JSON.parse(body || '{}');
+          if (res.statusCode >= 200 && res.statusCode < 300) {
             resolve(json);
-          } catch (e) {
-            reject({ statusCode: res.statusCode, body, error: 'JSON parse error' });
+          } else {
+            reject({ statusCode: res.statusCode, body: json });
           }
-        } else {
-          reject({ statusCode: res.statusCode, body });
+        } catch (e) {
+          reject({ statusCode: res.statusCode, body, error: 'JSON parse error' });
         }
       });
     });
 
-    req.on('error', (e) => {
-      reject(e);
-    });
+    req.on('error', reject);
 
     if (data) {
       req.write(JSON.stringify(data));
@@ -48,8 +46,7 @@ function githubRequest(path, method = 'GET', data = null) {
 
 module.exports = async function handler(req, res) {
   if (!TOKEN) {
-    res.status(500).json({ error: 'Missing GitHub token' });
-    return;
+    return res.status(500).json({ error: 'Missing GitHub token' });
   }
 
   try {
@@ -58,84 +55,65 @@ module.exports = async function handler(req, res) {
     let produkList = JSON.parse(content);
 
     if (req.method === 'GET') {
-      res.status(200).json(produkList);
+      return res.status(200).json(produkList);
+    }
 
-    } else if (req.method === 'POST') {
+    // Validasi method POST
+    if (req.method === 'POST') {
       const produkBaru = req.body;
-      if (!produkBaru || !produkBaru.nama || !produkBaru.img || !(produkBaru.paket || produkBaru.harga)) {
-        res.status(400).json({ error: 'Produk baru kurang lengkap' });
-        return;
+      if (!produkBaru || !produkBaru.nama || !produkBaru.img || 
+        (produkBaru.harga === undefined && !Array.isArray(produkBaru.paket))) {
+        return res.status(400).json({ error: 'Produk baru kurang lengkap' });
       }
+
       produkList.push(produkBaru);
+    }
 
-      const commitMessage = `Add produk: ${produkBaru.nama}`;
-      const updatedContent = Buffer.from(JSON.stringify(produkList, null, 2)).toString('base64');
-
-      await githubRequest(`/repos/${REPO}/contents/${FILEPATH}`, 'PUT', {
-        message: commitMessage,
-        content: updatedContent,
-        sha: fileData.sha,
-        branch: BRANCH,
-      });
-
-      res.status(200).json({ success: true, produkBaru });
-
-    } else if (req.method === 'PUT') {
-      // Edit produk berdasarkan index atau id (misal index)
+    // Validasi method PUT (edit)
+    if (req.method === 'PUT') {
       const { index, produkEdit } = req.body;
       if (typeof index !== 'number' || !produkEdit) {
-        res.status(400).json({ error: 'Index dan produkEdit harus diberikan' });
-        return;
+        return res.status(400).json({ error: 'Index dan produkEdit harus diberikan' });
       }
       if (index < 0 || index >= produkList.length) {
-        res.status(400).json({ error: 'Index produk tidak valid' });
-        return;
+        return res.status(400).json({ error: 'Index produk tidak valid' });
       }
 
       produkList[index] = { ...produkList[index], ...produkEdit };
+    }
 
-      const commitMessage = `Edit produk index ${index}: ${produkList[index].nama || 'Unnamed'}`;
-      const updatedContent = Buffer.from(JSON.stringify(produkList, null, 2)).toString('base64');
-
-      await githubRequest(`/repos/${REPO}/contents/${FILEPATH}`, 'PUT', {
-        message: commitMessage,
-        content: updatedContent,
-        sha: fileData.sha,
-        branch: BRANCH,
-      });
-
-      res.status(200).json({ success: true, produk: produkList[index] });
-
-    } else if (req.method === 'DELETE') {
-      // Hapus produk berdasarkan index
+    // Validasi method DELETE
+    if (req.method === 'DELETE') {
       const { index } = req.body;
       if (typeof index !== 'number') {
-        res.status(400).json({ error: 'Index harus diberikan' });
-        return;
+        return res.status(400).json({ error: 'Index harus diberikan' });
       }
       if (index < 0 || index >= produkList.length) {
-        res.status(400).json({ error: 'Index produk tidak valid' });
-        return;
+        return res.status(400).json({ error: 'Index produk tidak valid' });
       }
 
-      const removed = produkList.splice(index, 1)[0];
-
-      const commitMessage = `Delete produk index ${index}: ${removed.nama || 'Unnamed'}`;
-      const updatedContent = Buffer.from(JSON.stringify(produkList, null, 2)).toString('base64');
-
-      await githubRequest(`/repos/${REPO}/contents/${FILEPATH}`, 'PUT', {
-        message: commitMessage,
-        content: updatedContent,
-        sha: fileData.sha,
-        branch: BRANCH,
-      });
-
-      res.status(200).json({ success: true, removed });
-
-    } else {
-      res.status(405).json({ error: 'Method not allowed' });
+      produkList.splice(index, 1);
     }
+
+    // Update file ke GitHub
+    const updatedContent = Buffer.from(JSON.stringify(produkList, null, 2)).toString('base64');
+    const commitMessage = {
+      POST: `Add produk: ${req.body.nama}`,
+      PUT: `Edit produk index ${req.body.index}`,
+      DELETE: `Delete produk index ${req.body.index}`
+    }[req.method] || 'Update produk';
+
+    await githubRequest(`/repos/${REPO}/contents/${FILEPATH}`, 'PUT', {
+      message: commitMessage,
+      content: updatedContent,
+      sha: fileData.sha,
+      branch: BRANCH,
+    });
+
+    return res.status(200).json({ success: true });
   } catch (error) {
-    res.status(error.statusCode || 500).json({ error: error.body || error.message || 'Unknown error' });
+    return res.status(error.statusCode || 500).json({
+      error: error.body || error.message || 'Unknown error',
+    });
   }
 };
