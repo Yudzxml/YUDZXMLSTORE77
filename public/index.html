@@ -7,8 +7,83 @@
   <title>Toko Yudzxml</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" type="image/png" />
+  <style>
+    #modalOverlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #modalBox {
+      background: #121212;
+      color: #cce6ff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      max-width: 400px;
+      box-shadow:
+        0 0 5px #00aaff,
+        0 0 10px #00aaff,
+        0 0 20px #00c0ff,
+        0 0 30px #00c0ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: left;
+    }
+    #modalBox h2 {
+      color: #00c0ff;
+      margin-bottom: 15px;
+      text-align: center;
+      text-shadow:
+        0 0 5px #00aaff,
+        0 0 10px #00aaff;
+    }
+    #modalBox ul {
+      margin-left: 20px;
+      line-height: 1.5;
+    }
+    #modalBox button {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #00aaff;
+      border: none;
+      padding: 10px 0;
+      font-size: 16px;
+      color: #121212;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      box-shadow:
+        0 0 5px #00aaff,
+        0 0 10px #00aaff;
+    }
+    #modalBox button:hover {
+      background-color: #008ecc;
+      box-shadow:
+        0 0 10px #008ecc,
+        0 0 20px #008ecc;
+    }
+  </style>
 </head>
 <body>
+  <div id="modalOverlay">
+    <div id="modalBox">
+      <h2>CARA ORDER</h2>
+      <ul>
+        <li>PILIH PRODUK</li>
+        <li>SETELAH ITU TAP ORDER</li>
+        <li>ISI FORMULIR</li>
+        <li>ISI NAMA</li>
+        <li>PILIH SPESIFIKASI PRODUK</li>
+        <li>LALU TAP ORDER VIA WA</li>
+        <li>OTOMATIS DIARAHKAN KE WA</li>
+      </ul>
+      <button id="modalOkBtn">OK</button>
+    </div>
+  </div>
+
   <header>
     <h1 class="neon">SELAMAT DATANG</h1>
     <p class="subtitle">YUDZXML STORE 77</p>
@@ -17,7 +92,6 @@
   <main>
     <div id="produkContainer" class="grid-container"></div>
 
-    <!-- Form Checkout -->
     <section id="checkoutSection" class="hidden fullpage">
       <button id="closeFormBtn" title="Tutup Form">&times;</button>
       <h2>Form Checkout</h2>
@@ -40,14 +114,27 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 <strong>YUDZXMLSTORE77</strong> &mdash; MADE WITH <span style="color:#ff66cc;">&hearts;</span></p>
+    <p>&copy; 2025 <strong>YUDZXMLSTORE77</strong> &mdash; MADE WITH <span style="color:#00aaff;">&hearts;</span></p>
   </footer>
 
-<audio id="audio-player" loop preload="auto">
-  <source src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/2efe60e5.mp3" type="audio/mp3">
-  Browser kamu tidak mendukung audio.
-</audio>
+  <audio id="audio-player" loop preload="auto">
+    <source src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/2efe60e5.mp3" type="audio/mp3">
+    Browser kamu tidak mendukung audio.
+  </audio>
 
   <script src="script.js"></script>
+
+  <script>
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalOkBtn = document.getElementById('modalOkBtn');
+
+    modalOkBtn.addEventListener('click', () => {
+      modalOverlay.style.display = 'none';
+    });
+
+    window.addEventListener('load', () => {
+      modalOverlay.style.display = 'flex';
+    });
+  </script>
 </body>
 </html>

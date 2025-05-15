@@ -1,3 +1,9 @@
+const audioPlayer = document.getElementById('audio-player');
+
+window.addEventListener('click', function() {
+  audioPlayer.play();
+});
+
 // LOGIN ADMIN
 const adminUsername = "Yudzxml";
 const adminPassword = "@Yudzxml1122";
