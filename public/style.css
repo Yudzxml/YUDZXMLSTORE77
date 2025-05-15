@@ -118,28 +118,26 @@ button:hover {
 
 /* Tutup form */
 #closeFormBtn {
-  align-self: flex-end;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
   background: none;
   border: none;
-  font-size: 1.5rem;
-  width: 2rem;
-  height: 2rem;
+  font-size: 1.2rem;
+  width: 1.6rem;
+  height: 1.6rem;
   color: var(--accent);
   cursor: pointer;
-  margin-bottom: 1rem;
   line-height: 1;
   font-weight: bold;
-  transition: color 0.3s ease, transform 0.2s ease;
-  position: absolute;
-  top: 1rem;
-  right: 1.5rem;
   padding: 0;
   text-align: center;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 #closeFormBtn:hover {
   color: #004080;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 /* Form umum */
