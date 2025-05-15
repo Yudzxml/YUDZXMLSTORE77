@@ -69,14 +69,17 @@ h1.neon {
 }
 
 .card img {
-  width: 100%;
-  height: 140px;
-  background-color: #1a1a1a; 
+  width: auto;       /* Biarkan lebar sesuai proporsi asli */
+  height: auto;      /* Biarkan tinggi sesuai proporsi asli */
+  max-width: 100%;   /* Jangan lebih dari container */
+  max-height: 140px; /* Boleh batasi tinggi maksimal agar tidak terlalu besar */
+  background-color: #1a1a1a;
   padding: 6px;
-  object-fit: cover;
+  object-fit: none;  /* Jangan resize isi gambar */
   border-radius: 10px;
   margin-bottom: 1rem;
   filter: drop-shadow(0 0 3px var(--accent));
+  display: block;    /* Hilangkan space bawah gambar */
 }
 
 /* Tombol umum */
