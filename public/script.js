@@ -26,7 +26,7 @@ async function renderProduk() {
       card.innerHTML = `
         <img src="${produk.img}" alt="${produk.nama}" />
         <h3>${produk.nama}</h3>
-        <button onclick="bukaFormCheckout(${index})">Order</button>
+        <button onclick="bukaFormCheckout(${index})">CHECKOUT</button>
       `;
       produkContainer.appendChild(card);
     });
