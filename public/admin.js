@@ -89,8 +89,10 @@ function renderProduk() {
 }
 
 function openForm(isEdit = false) {
-  document.getElementById('productForm').style.display = 'flex';
+  const form = document.getElementById('productForm');
+  form.classList.add('active');
   document.body.classList.add('form-active');
+
   if (!isEdit) {
     document.getElementById('formTitle').textContent = 'Tambah Produk';
     document.getElementById('editIndex').value = '';
@@ -102,7 +104,8 @@ function openForm(isEdit = false) {
 }
 
 function closeForm() {
-  document.getElementById('productForm').style.display = 'none';
+  const form = document.getElementById('productForm');
+  form.classList.remove('active');
   document.body.classList.remove('form-active');
 }
 
