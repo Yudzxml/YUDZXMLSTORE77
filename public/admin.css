@@ -351,3 +351,63 @@ body {
   box-shadow: 0 0 20px #3399ff, 0 0 40px #0044cc;
   transform: scale(1.05);
 }
+
+#productList.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.product-card {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 12px rgba(0,255,255,0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-card img {
+  max-width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.product-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.product-card .price {
+  color: #0f0;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.product-card .paket {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.card-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-actions button {
+  background-color: #333;
+  border: none;
+  padding: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  flex: 1;
+  margin: 0 0.25rem;
+}

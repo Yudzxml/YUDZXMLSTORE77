@@ -54,6 +54,7 @@ async function fetchProduk() {
 function renderProduk() {
   const container = document.getElementById('productList');
   container.innerHTML = '';
+  container.className = 'product-grid'; // Tambahkan class grid di container
 
   produk.forEach((item, index) => {
     let paketText = '';
@@ -72,14 +73,16 @@ function renderProduk() {
     const hargaText = hargaNum !== null ? `Rp ${hargaNum.toLocaleString('id-ID')}` : '-';
 
     const el = document.createElement('div');
-    el.className = 'card';
+    el.className = 'product-card';
     el.innerHTML = `
       <img src="${item.img}" alt="${item.nama}">
       <h3>${item.nama}</h3>
-      ${hargaNum !== null && (!item.paket || item.paket.length === 0) ? `<p><strong>Harga:</strong> ${hargaText}</p>` : ''}
-      ${paketText ? `<p><strong>Paket:</strong><br>${paketText}</p>` : ''}
-      <button onclick="editProduk(${index})">Edit</button>
-      <button onclick="hapusProduk(${index})" style="margin-left:10px; background:#cc3344">Hapus</button>
+      ${hargaNum !== null && (!item.paket || item.paket.length === 0) ? `<p class="price">${hargaText}</p>` : ''}
+      ${paketText ? `<p class="paket">${paketText}</p>` : ''}
+      <div class="card-actions">
+        <button onclick="editProduk(${index})">Edit</button>
+        <button onclick="hapusProduk(${index})" style="background:#cc3344">Hapus</button>
+      </div>
     `;
     container.appendChild(el);
   });
