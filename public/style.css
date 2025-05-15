@@ -32,7 +32,7 @@ h1, h2, h3 {
 }
 
 h1.neon {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-top: 1rem;
 }
 
@@ -114,6 +114,14 @@ button:hover {
   border-radius: 12px;
   border: 2px solid var(--accent2);
   box-shadow: 0 0 20px #0a84ff55;
+}
+
+.fullpage h2 {
+  font-size: 1rem;
+  text-align: left;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  text-shadow: 0 0 4px var(--accent), 0 0 8px var(--accent2);
 }
 
 /* Tutup form */
