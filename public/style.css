@@ -60,12 +60,12 @@ h1.neon {
   padding: 1rem;
   box-shadow: 0 0 8px #0a84ff55;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .card:hover {
-  transform: scale(1.04);
-  box-shadow: 0 0 12px var(--accent2), 0 0 24px #00408055;
+  transform: scale(1.06);
+  box-shadow: 0 0 15px var(--accent), 0 0 25px var(--accent2);
 }
 
 .card img {
@@ -83,10 +83,11 @@ button {
   border-radius: 8px;
   color: white;
   font-weight: 600;
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
   box-shadow: 0 0 10px #0a84ff88;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 button:hover {
@@ -98,7 +99,9 @@ button:hover {
 /* Form checkout */
 .fullpage {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #181c23;
   padding: 2rem;
   z-index: 9999;
@@ -106,7 +109,8 @@ button:hover {
   display: flex;
   flex-direction: column;
   max-width: 600px;
-  margin: auto;
+  height: auto;
+  max-height: 90vh;
   border-radius: 12px;
   border: 2px solid var(--accent2);
   box-shadow: 0 0 20px #0a84ff55;
@@ -125,7 +129,7 @@ button:hover {
   margin-bottom: 1rem;
   line-height: 1;
   font-weight: bold;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
   position: absolute;
   top: 1rem;
   right: 1.5rem;
@@ -135,6 +139,7 @@ button:hover {
 
 #closeFormBtn:hover {
   color: #004080;
+  transform: scale(1.2);
 }
 
 /* Form umum */
@@ -155,6 +160,7 @@ textarea {
   color: var(--text-light);
   padding: 0.5rem;
   font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 input[readonly] {
@@ -175,7 +181,13 @@ textarea:focus,
 select:focus {
   outline: none;
   border-color: var(--accent2);
-  box-shadow: 0 0 5px var(--accent2);
+  box-shadow: 0 0 6px var(--accent), 0 0 10px var(--accent2);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
 }
 
 label {
@@ -183,8 +195,9 @@ label {
   color: var(--text-muted);
 }
 
+/* Deskripsi produk */
 #produkDeskripsi {
-  background: #1f2228; /* sama dengan card bg */
+  background: #1f2228;
   border: 1px solid var(--accent2);
   border-radius: 8px;
   padding: 0.75rem 1rem;
@@ -196,7 +209,7 @@ label {
     0 0 12px var(--accent2);
   margin-bottom: 1rem;
   min-height: 50px;
-  white-space: pre-wrap; /* supaya enter/line break di deskripsi tetap muncul */
+  white-space: pre-wrap;
 }
 
 /* Label paket dinamis */
@@ -264,3 +277,18 @@ footer {
   }
 }
 
+@media (max-width: 480px) {
+  form {
+    gap: 0.75rem;
+  }
+
+  input, select, textarea {
+    font-size: 0.95rem;
+    padding: 0.45rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.9rem;
+  }
+}
