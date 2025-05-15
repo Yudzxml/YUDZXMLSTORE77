@@ -12,22 +12,20 @@ function renderProduk() {
 
   produk.forEach((item, index) => {
     let paketText = '';
-    if (Array.isArray(item.paket)) {
+    if (Array.isArray(item.paket) && item.paket.length > 0) {
       paketText = item.paket
         .map(p => `${p.name} - Rp ${p.harga.toLocaleString()}`)
         .join('<br>');
-    } else if (typeof item.paket === 'string') {
-      paketText = item.paket;
     }
 
-    const hargaText = item.harga !== undefined ? `Rp ${item.harga.toLocaleString()}` : '-';
+    const hargaText = (item.harga !== undefined && item.harga !== '') ? `Rp ${Number(item.harga).toLocaleString()}` : '-';
 
     const el = document.createElement('div');
     el.className = 'card';
     el.innerHTML = `
       <img src="${item.img}" alt="${item.nama}">
       <h3>${item.nama}</h3>
-      ${item.harga !== undefined && (!item.paket || item.paket.length === 0) ? `<p><strong>Harga:</strong> ${hargaText}</p>` : ''}
+      ${item.harga !== undefined && item.harga !== '' && (!item.paket || item.paket.length === 0) ? `<p><strong>Harga:</strong> ${hargaText}</p>` : ''}
       ${paketText ? `<p><strong>Paket:</strong><br>${paketText}</p>` : ''}
       <button onclick="editProduk(${index})">Edit</button>
       <button onclick="hapusProduk(${index})" style="margin-left:10px; background:#cc3344">Hapus</button>
@@ -61,14 +59,12 @@ function editProduk(index) {
   document.getElementById('editIndex').value = index;
   document.getElementById('nama').value = p.nama || '';
   document.getElementById('img').value = p.img || '';
-  document.getElementById('harga').value = p.harga !== undefined ? p.harga : '';
+  document.getElementById('harga').value = (p.harga !== undefined && p.harga !== '') ? p.harga : '';
 
-  if (Array.isArray(p.paket)) {
+  if (Array.isArray(p.paket) && p.paket.length > 0) {
     document.getElementById('paket').value = p.paket
       .map(x => `${x.name} - ${x.harga}`)
       .join('\n');
-  } else if (typeof p.paket === 'string') {
-    document.getElementById('paket').value = p.paket;
   } else {
     document.getElementById('paket').value = '';
   }
@@ -94,27 +90,29 @@ async function handleFormSubmit(e) {
   e.preventDefault();
   const index = document.getElementById('editIndex').value;
 
-  const paketRaw = document.getElementById('paket').value;
+  const paketRaw = document.getElementById('paket').value.trim();
   const paketArr = paketRaw
     ? paketRaw.split('\n').map(p => {
-        let [name, harga] = p.split('-');
-        if (!name || !harga) return null;
-        name = name.trim();
-        harga = harga.replace(/\D/g, '');
-        harga = parseInt(harga);
+        const parts = p.split('-');
+        if (parts.length < 2) return null;
+
+        const name = parts[0].trim();
+        const hargaStr = parts.slice(1).join('-').replace(/\D/g, '');
+        const harga = parseInt(hargaStr);
+
         if (!name || isNaN(harga)) return null;
         return { name, harga };
       }).filter(p => p !== null)
     : [];
 
-  const hargaInput = document.getElementById('harga').value;
-  const harga = hargaInput ? parseInt(hargaInput.replace(/\D/g, '')) : undefined;
+  const hargaInput = document.getElementById('harga').value.trim();
+  const harga = hargaInput === '' ? '' : parseInt(hargaInput.replace(/\D/g, ''));
 
   const payload = {
-    nama: document.getElementById('nama').value,
-    img: document.getElementById('img').value,
+    nama: document.getElementById('nama').value.trim(),
+    img: document.getElementById('img').value.trim(),
     harga: harga,
-    paket: paketArr.length > 0 ? paketArr : undefined
+    paket: paketArr
   };
 
   const method = index === '' ? 'POST' : 'PUT';
