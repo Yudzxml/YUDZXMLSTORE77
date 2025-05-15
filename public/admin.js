@@ -14,18 +14,24 @@ function renderProduk() {
     let paketText = '';
     if (Array.isArray(item.paket) && item.paket.length > 0) {
       paketText = item.paket
-        .map(p => `${p.name} - Rp ${p.harga.toLocaleString()}`)
+        .map(p => {
+          const hargaNum = typeof p.harga === 'number' ? p.harga : parseInt(p.harga) || 0;
+          return `${p.name} - Rp ${hargaNum.toLocaleString('id-ID')}`;
+        })
         .join('<br>');
     }
 
-    const hargaText = (item.harga !== undefined && item.harga !== '') ? `Rp ${Number(item.harga).toLocaleString()}` : '-';
+    const hargaNum = (item.harga !== undefined && item.harga !== '') 
+      ? (typeof item.harga === 'number' ? item.harga : parseInt(item.harga)) 
+      : null;
+    const hargaText = hargaNum !== null ? `Rp ${hargaNum.toLocaleString('id-ID')}` : '-';
 
     const el = document.createElement('div');
     el.className = 'card';
     el.innerHTML = `
       <img src="${item.img}" alt="${item.nama}">
       <h3>${item.nama}</h3>
-      ${item.harga !== undefined && item.harga !== '' && (!item.paket || item.paket.length === 0) ? `<p><strong>Harga:</strong> ${hargaText}</p>` : ''}
+      ${hargaNum !== null && (!item.paket || item.paket.length === 0) ? `<p><strong>Harga:</strong> ${hargaText}</p>` : ''}
       ${paketText ? `<p><strong>Paket:</strong><br>${paketText}</p>` : ''}
       <button onclick="editProduk(${index})">Edit</button>
       <button onclick="hapusProduk(${index})" style="margin-left:10px; background:#cc3344">Hapus</button>
