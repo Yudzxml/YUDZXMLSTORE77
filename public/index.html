@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#121212" />
+  <title>Toko Yudzxml</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" type="image/png" />
+</head>
+<body>
+  <header>
+    <h1 class="neon">SELAMAT DATANG</h1>
+    <p class="subtitle">YUDZXML STORE 77</p>
+  </header>
 
+  <main>
+    <div id="produkContainer" class="grid-container"></div>
+
+    <!-- Form Checkout -->
+    <section id="checkoutSection" class="hidden fullpage">
+      <button id="closeFormBtn" title="Tutup Form">&times;</button>
+      <h2>Form Checkout</h2>
+      <form id="checkoutForm" onsubmit="sendToWhatsApp(event)">
+        <label for="namaPembeli">Nama Kamu:</label>
+        <input type="text" id="namaPembeli" name="namaPembeli" required />
+
+        <label for="produkDipilih">Produk:</label>
+        <input type="text" id="produkDipilih" name="produkDipilih" readonly />
+
+        <label for="paketPilihan" id="labelPaket" class="hidden">Pilih Paket / Spesifikasi:</label>
+        <select id="paketPilihan" name="paketPilihan" class="hidden"></select>
+
+        <label for="hargaProduk">Harga:</label>
+        <input type="text" id="hargaProduk" name="hargaProduk" readonly />
+
+        <button type="submit">Order via WhatsApp</button>
+      </form>
+    </section>
+
+    <!-- Form Tambah Produk -->
+    <section id="addProductForm" class="hidden fullpage">
+      <form onsubmit="tambahProdukBaru(event)">
+        <h2>Tambah Produk Baru</h2>
+
+        <label for="namaProdukBaru">Nama Produk:</label>
+        <input type="text" id="namaProdukBaru" required />
+
+        <label for="imgProdukBaru">URL Gambar:</label>
+        <input type="text" id="imgProdukBaru" required />
+
+        <label for="paketProdukBaru">Paket Produk (opsional - satu per baris, format: Nama Paket - Harga):</label>
+        <textarea id="paketProdukBaru" placeholder="Contoh:
+RAM 1GB CPU 1 - 20000
+RAM 2GB CPU 2 - 30000"></textarea>
+
+        <label for="hargaProdukBaru">Harga Produk (opsional jika tidak pakai paket):</label>
+        <input type="number" id="hargaProdukBaru" />
+
+        <label for="formPassword">Password Admin:</label>
+        <input type="password" id="formPassword" required />
+
+        <div class="button-group">
+          <button type="submit">Tambah Produk</button>
+          <button type="button" onclick="tutupAddProduk()">Batal</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 <strong>YUDZXML STORE 77</strong> &mdash; MADE WITH <span style="color:#ff66cc;">&hearts;</span></p>
+  </footer>
+
+  <!-- Tombol tambah produk -->
+  <button id="floatingAddBtn" onclick="bukaAddProduk()" title="Tambah Produk">+</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
