@@ -11,6 +11,52 @@ const closeFormBtn = document.getElementById("closeFormBtn");
 const addProductFormSection = document.getElementById("addProductForm");
 const checkoutForm = document.getElementById("checkoutForm");
 
+// Referensi tombol submenu
+const floatingBtn = document.getElementById("mainFloatingBtn");
+
+// Buat elemen submenu
+const submenu = document.createElement("div");
+submenu.id = "floatingSubmenu";
+submenu.style.position = "fixed";
+submenu.style.bottom = "80px";
+submenu.style.right = "20px";
+submenu.style.display = "none";
+submenu.style.flexDirection = "column";
+submenu.style.gap = "10px";
+submenu.style.zIndex = "1000";
+document.body.appendChild(submenu);
+
+// Buat tombol submenu: Hapus, Tambah, Edit
+const btnHapus = document.createElement("button");
+btnHapus.textContent = "Hapus Produk";
+btnHapus.title = "Hapus Produk";
+btnHapus.onclick = bukaDeleteProdukForm;
+
+const btnTambah = document.createElement("button");
+btnTambah.textContent = "Tambah Produk";
+btnTambah.title = "Tambah Produk";
+btnTambah.onclick = bukaAddProduk;
+
+const btnEdit = document.createElement("button");
+btnEdit.textContent = "Edit Produk";
+btnEdit.title = "Edit Produk";
+btnEdit.onclick = bukaEditProdukForm;
+
+submenu.appendChild(btnHapus);
+submenu.appendChild(btnTambah);
+submenu.appendChild(btnEdit);
+
+// Toggle submenu saat tombol utama diklik
+floatingBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  submenu.style.display = submenu.style.display === "none" ? "flex" : "none";
+});
+
+// Tutup submenu jika klik di luar tombol/submenu
+document.addEventListener("click", () => {
+  submenu.style.display = "none";
+});
+
 // Render produk dari API
 async function renderProduk() {
   try {
@@ -84,6 +130,7 @@ closeFormBtn.addEventListener("click", () => {
 function bukaAddProduk() {
   addProductFormSection.classList.remove("hidden");
   document.body.classList.add("form-active");
+  submenu.style.display = "none";
 }
 
 // Tutup form tambah produk
@@ -184,3 +231,195 @@ function sendToWhatsApp(event) {
 
 // Submit form checkout
 checkoutForm.addEventListener('submit', sendToWhatsApp);
+
+// Buka form edit produk dengan input visual (form baru)
+const editProductFormSection = document.getElementById("editProductForm");
+const editNamaInput = document.getElementById("editNamaProduk");
+const editImgInput = document.getElementById("editImgProduk");
+const editHargaInput = document.getElementById("editHargaProduk");
+const editPaketInput = document.getElementById("editPaketProduk");
+const editPasswordInput = document.getElementById("editFormPassword");
+const editFormCloseBtn = document.getElementById("editFormCloseBtn");
+const editFormSaveBtn = document.getElementById("editFormSaveBtn");
+
+let currentEditIndex = null;
+
+function bukaEditProdukForm() {
+  submenu.style.display = "none";
+
+  if (produkList.length === 0) {
+    alert("Belum ada produk untuk diedit.");
+    return;
+  }
+
+  const namaEdit = prompt("Masukkan nama produk yang ingin diedit:");
+  if (!namaEdit) return;
+
+  const index = produkList.findIndex(p => p.nama.toLowerCase() === namaEdit.toLowerCase());
+  if (index === -1) {
+    alert("Produk tidak ditemukan.");
+    return;
+  }
+
+  currentEditIndex = index;
+  const produk = produkList[index];
+
+  // Isi form edit
+  editNamaInput.value = produk.nama;
+  editImgInput.value = produk.img || "";
+  editHargaInput.value = produk.harga || "";
+  if (produk.paket && produk.paket.length > 0) {
+    editPaketInput.value = produk.paket.map(p => `${p.name} - ${p.harga}`).join("\n");
+  } else {
+    editPaketInput.value = "";
+  }
+
+  editPasswordInput.value = "";
+  editProductFormSection.classList.remove("hidden");
+  document.body.classList.add("form-active");
+}
+
+// Tutup form edit produk
+function tutupEditProduk() {
+  editProductFormSection.classList.add("hidden");
+  document.body.classList.remove("form-active");
+  currentEditIndex = null;
+}
+
+// Simpan perubahan edit produk
+async function simpanEditProduk(event) {
+  event.preventDefault();
+  const ADMIN_PASSWORD = "ADMINYUDZXML";
+
+  const password = editPasswordInput.value;
+  if (password !== ADMIN_PASSWORD) {
+    alert("Password salah!");
+    return;
+  }
+
+  const newNama = editNamaInput.value.trim();
+  const newImg = editImgInput.value.trim();
+  const newHargaStr = editHargaInput.value.trim();
+  const newPaketText = editPaketInput.value.trim();
+
+  if (!newNama || !newImg || (!newHargaStr && !newPaketText)) {
+    alert("Isi semua field dengan benar!");
+    return;
+  }
+
+  const produkUpdate = { nama: newNama, img: newImg };
+
+  if (newPaketText) {
+    const paketLines = newPaketText.split("\n").filter(line => line.trim());
+    produkUpdate.paket = paketLines.map(line => {
+      const [name, hargaStr] = line.split(" - ");
+      return {
+        name: name?.trim(),
+        harga: parseInt(hargaStr?.trim())
+      };
+    }).filter(p => p.name && !isNaN(p.harga));
+    delete produkUpdate.harga;
+  } else if (newHargaStr) {
+    const hargaNum = parseInt(newHargaStr);
+    if (isNaN(hargaNum)) {
+      alert("Harga harus angka!");
+      return;
+    }
+    produkUpdate.harga = hargaNum;
+    delete produkUpdate.paket;
+  }
+
+  const originalNama = produkList[currentEditIndex].nama;
+
+  try {
+    const res = await fetch(`/api/products/${encodeURIComponent(originalNama)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(produkUpdate)
+    });
+
+    if (res.ok) {
+      alert('Produk berhasil diperbarui!');
+      await renderProduk();
+      tutupEditProduk();
+    } else {
+      const data = await res.json();
+      alert('Gagal memperbarui produk: ' + (data.error || 'Unknown error'));
+    }
+  } catch (err) {
+    alert('Terjadi kesalahan saat mengupdate produk.');
+  }
+}
+
+editFormCloseBtn.addEventListener("click", tutupEditProduk);
+editFormSaveBtn.addEventListener("click", simpanEditProduk);
+
+const deleteProductFormSection = document.getElementById("deleteProductForm");
+const deleteProdukSelect = document.getElementById("deleteProdukSelect");
+const deleteFormPassword = document.getElementById("deleteFormPassword");
+const deleteFormConfirmBtn = document.getElementById("deleteFormConfirmBtn");
+const deleteFormCloseBtn = document.getElementById("deleteFormCloseBtn");
+
+// Fungsi buka form hapus produk
+function bukaDeleteProdukForm() {
+  submenu.style.display = "none";
+  if (produkList.length === 0) {
+    alert("Belum ada produk untuk dihapus.");
+    return;
+  }
+  // Isi dropdown produk dengan nama produk
+  deleteProdukSelect.innerHTML = "";
+  produkList.forEach(p => {
+    const option = document.createElement("option");
+    option.value = p.nama;
+    option.textContent = p.nama;
+    deleteProdukSelect.appendChild(option);
+  });
+
+  deleteFormPassword.value = "";
+  deleteProductFormSection.classList.remove("hidden");
+  document.body.classList.add("form-active");
+}
+
+// Tutup form hapus produk
+function tutupDeleteProduk() {
+  deleteProductFormSection.classList.add("hidden");
+  document.body.classList.remove("form-active");
+}
+
+// Konfirmasi dan hapus produk
+async function konfirmasiHapusProduk() {
+  const nama = deleteProdukSelect.value;
+  const password = deleteFormPassword.value;
+  const ADMIN_PASSWORD = "ADMINYUDZXML";
+
+  if (password !== ADMIN_PASSWORD) {
+    alert("Password salah!");
+    return;
+  }
+
+  const konfirmasi = confirm(`Yakin ingin menghapus produk "${nama}"?`);
+  if (!konfirmasi) return;
+
+  try {
+    const res = await fetch(`/api/products/${encodeURIComponent(nama)}`, {
+      method: 'DELETE',
+    });
+    if (res.ok) {
+      alert("Produk berhasil dihapus!");
+      await renderProduk();
+      tutupDeleteProduk();
+    } else {
+      alert("Gagal menghapus produk.");
+    }
+  } catch {
+    alert("Terjadi kesalahan saat menghapus produk.");
+  }
+}
+
+// Event listener tombol form hapus
+deleteFormConfirmBtn.addEventListener("click", konfirmasiHapusProduk);
+deleteFormCloseBtn.addEventListener("click", tutupDeleteProduk);
+
+// Ganti fungsi hapusProduk di submenu jadi buka form hapus produk:
+btnHapus.onclick = bukaDeleteProdukForm;

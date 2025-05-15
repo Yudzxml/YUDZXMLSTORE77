@@ -120,6 +120,51 @@ button:hover {
   box-shadow: 0 0 20px #ff33aa88, 0 0 30px #4444ff88;
 }
 
+/* Submenu mengambang */
+#floatingSubmenu {
+  position: fixed;
+  bottom: 80px; /* sedikit di atas tombol tambah */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 0 15px var(--accent);
+  z-index: 1100;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#floatingSubmenu.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+#floatingSubmenu button {
+  min-width: 140px;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem 0;
+  border-radius: 8px;
+  background: linear-gradient(45deg, var(--accent2), var(--accent));
+  box-shadow: 0 0 8px var(--accent2);
+  color: white;
+  text-align: center;
+  user-select: none;
+}
+
+#floatingSubmenu button:hover {
+  background: linear-gradient(45deg, #6e6eff, #ff66cc);
+  box-shadow: 0 0 15px #ff66cc, 0 0 30px #6e6eff;
+}
+
 /* Form checkout */
 .fullpage {
   position: fixed;
@@ -268,5 +313,9 @@ footer {
   .fullpage {
     max-width: 95%;
     padding: 1rem;
+  }
+
+  #floatingAddBtn {
+    bottom: 1rem;
   }
 }
