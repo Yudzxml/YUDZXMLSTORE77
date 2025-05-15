@@ -9,6 +9,7 @@ const labelPaket = document.getElementById("labelPaket");
 const namaPembeliInput = document.getElementById("namaPembeli");
 const closeFormBtn = document.getElementById("closeFormBtn");
 const checkoutForm = document.getElementById("checkoutForm");
+const produkDeskripsi = document.getElementById("produkDeskripsi");
 
 // Render produk dari API
 async function renderProduk() {
@@ -45,7 +46,7 @@ function bukaFormCheckout(index) {
 
   produkDipilihInput.value = produk.nama;
   namaPembeliInput.value = "";
-
+  produkDeskripsi.textContent = produk.desc || "Tidak Ada Deskripsi";
   if (produk.paket && produk.paket.length > 0) {
     labelPaket.classList.remove("hidden");
     paketPilihanSelect.classList.remove("hidden");

@@ -183,6 +183,22 @@ label {
   color: var(--text-muted);
 }
 
+#produkDeskripsi {
+  background: #1f2228; /* sama dengan card bg */
+  border: 1px solid var(--accent2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-style: italic;
+  box-shadow:
+    0 0 6px var(--accent),
+    0 0 12px var(--accent2);
+  margin-bottom: 1rem;
+  min-height: 50px;
+  white-space: pre-wrap; /* supaya enter/line break di deskripsi tetap muncul */
+}
+
 /* Label paket dinamis */
 #labelPaket {
   display: block;
@@ -247,3 +263,4 @@ footer {
     padding: 1rem;
   }
 }
+

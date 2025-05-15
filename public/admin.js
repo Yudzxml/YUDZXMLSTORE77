@@ -60,7 +60,7 @@ async function fetchProduk() {
 function renderProduk() {
   const container = document.getElementById('productList');
   container.innerHTML = '';
-  container.className = 'product-grid'; // Tambahkan class grid di container
+  container.className = 'product-grid';
 
   produk.forEach((item, index) => {
     let paketText = '';
@@ -83,6 +83,7 @@ function renderProduk() {
     el.innerHTML = `
       <img src="${item.img}" alt="${item.nama}">
       <h3>${item.nama}</h3>
+      ${item.desc ? `<p class="desc">${item.desc}</p>` : ''}
       ${hargaNum !== null && (!item.paket || item.paket.length === 0) ? `<p class="price">${hargaText}</p>` : ''}
       ${paketText ? `<p class="paket">${paketText}</p>` : ''}
       <div class="card-actions">
@@ -106,6 +107,7 @@ function openForm(isEdit = false) {
     document.getElementById('img').value = '';
     document.getElementById('harga').value = '';
     document.getElementById('paket').value = '';
+    document.getElementById('deskripsi').value = '';
   }
 }
 
@@ -123,6 +125,7 @@ function editProduk(index) {
   document.getElementById('nama').value = p.nama || '';
   document.getElementById('img').value = p.img || '';
   document.getElementById('harga').value = (p.harga !== undefined && p.harga !== '') ? p.harga : '';
+  document.getElementById('deskripsi').value = p.desc || '';
 
   if (Array.isArray(p.paket) && p.paket.length > 0) {
     document.getElementById('paket').value = p.paket
@@ -158,11 +161,9 @@ async function handleFormSubmit(e) {
     ? paketRaw.split('\n').map(p => {
         const parts = p.split('-');
         if (parts.length < 2) return null;
-
         const name = parts[0].trim();
         const hargaStr = parts.slice(1).join('-').replace(/\D/g, '');
         const harga = parseInt(hargaStr);
-
         if (!name || isNaN(harga)) return null;
         return { name, harga };
       }).filter(p => p !== null)
@@ -175,7 +176,8 @@ async function handleFormSubmit(e) {
     nama: document.getElementById('nama').value.trim(),
     img: document.getElementById('img').value.trim(),
     harga: harga,
-    paket: paketArr
+    paket: paketArr,
+    desc: document.getElementById('deskripsi').value.trim() || ""
   };
 
   const method = index === '' ? 'POST' : 'PUT';
