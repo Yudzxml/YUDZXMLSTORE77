@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Produk</title>
   <link rel="stylesheet" href="admin.css" />
 </head>
@@ -10,7 +10,7 @@
   <!-- Login Form -->
   <div id="loginForm" style="display: none; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
     <h2>Login Admin</h2>
-    <form onsubmit="return handleLogin(event)" style="display: flex; flex-direction: column; width: 300px;">
+    <form id="loginFormElement" style="display: flex; flex-direction: column; width: 300px;">
       <label>Username:</label>
       <input type="text" id="username" required />
       <label>Password:</label>
@@ -30,9 +30,9 @@
 
     <!-- Form Tambah/Edit Produk -->
     <div id="productForm" style="display:none; flex-direction: column; max-width: 600px; margin: auto; background: #111; padding: 1rem; border-radius: 8px; position: relative;">
-      <button id="closeFormBtn" onclick="closeForm()" style="position: absolute; top: 10px; right: 10px;">×</button>
+      <button id="closeFormBtn" type="button" style="position: absolute; top: 10px; right: 10px;">×</button>
       <h2 id="formTitle">Tambah Produk</h2>
-      <form onsubmit="handleFormSubmit(event)" style="display: flex; flex-direction: column;">
+      <form id="productFormElement" style="display: flex; flex-direction: column;">
         <input type="hidden" id="editIndex" />
         <label>Nama Produk:</label>
         <input type="text" id="nama" required />
@@ -41,7 +41,9 @@
         <label>Harga Produk (jika tidak punya paket):</label>
         <input type="text" id="harga" />
         <label>Paket (opsional):</label>
-        <textarea id="paket" placeholder="Contoh:\nPANEL PTERODACTYL - 12000\nSCRIPT BOT - 50000" rows="4"></textarea>
+        <textarea id="paket" placeholder="Contoh: 
+PANEL PTERODACTYL - 12000
+SCRIPT BOT - 50000" rows="4"></textarea>
         <small>Format: Nama Paket - Harga, satu paket per baris</small>
         <button type="submit" style="margin-top: 1rem;">Simpan</button>
       </form>
@@ -49,60 +51,21 @@
 
     <!-- Tombol Tambah dan Logout -->
     <div class="buttons" style="text-align: center; margin: 2rem 0;">
-      <button onclick="openForm()">+ Tambah Produk</button>
-      <button onclick="logout()" class="logout-btn" style="margin-left: 1rem;">Logout</button>
+      <button id="addProductBtn">+ Tambah Produk</button>
+      <button id="logoutBtn" class="logout-btn" style="margin-left: 1rem;">Logout</button>
     </div>
 
     <footer style="text-align: center; color: #666; margin-top: 2rem;">© 2025 YUDZXML STORE 77</footer>
   </div>
 
-  <!-- Script -->
   <script src="admin.js"></script>
   <script>
-    const adminUsername = "Yudzxml";
-    const adminPassword = "@Yudzxml1122";
-
-    function setCookie(name, value, days) {
-      const expires = new Date(Date.now() + days * 864e5).toUTCString();
-      document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-    }
-
-    function getCookie(name) {
-      return document.cookie.split('; ').reduce((r, v) => {
-        const parts = v.split('=');
-        return parts[0] === name ? decodeURIComponent(parts[1]) : r
-      }, '');
-    }
-
-    function checkLogin() {
-      if (getCookie("adminLogin") === "true") {
-        document.getElementById("loginForm").style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
-        fetchProduk();
-      } else {
-        document.getElementById("loginForm").style.display = "flex";
-      }
-    }
-
-    function handleLogin(e) {
-      e.preventDefault();
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-
-      if (user === adminUsername && pass === adminPassword) {
-        setCookie("adminLogin", "true", 1);
-        checkLogin();
-      } else {
-        alert("Username atau password salah!");
-      }
-    }
-
-    function logout() {
-      setCookie("adminLogin", "false", -1);
-      location.reload();
-    }
-
-    checkLogin();
+    // Pasang event listener form login dan tombol
+    document.getElementById('loginFormElement').addEventListener('submit', handleLogin);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('addProductBtn').addEventListener('click', () => openForm(false));
+    document.getElementById('closeFormBtn').addEventListener('click', closeForm);
+    document.getElementById('productFormElement').addEventListener('submit', handleFormSubmit);
   </script>
 </body>
 </html>

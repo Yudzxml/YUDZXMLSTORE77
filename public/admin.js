@@ -1,3 +1,48 @@
+// LOGIN ADMIN
+const adminUsername = "Yudzxml";
+const adminPassword = "@Yudzxml1122";
+
+function setCookie(name, value, days) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+}
+
+function getCookie(name) {
+  return document.cookie.split('; ').reduce((r, v) => {
+    const parts = v.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r
+  }, '');
+}
+
+function checkLogin() {
+  if (getCookie("adminLogin") === "true") {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+    fetchProduk();
+  } else {
+    document.getElementById("loginForm").style.display = "flex";
+  }
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+
+  if (user === adminUsername && pass === adminPassword) {
+    setCookie("adminLogin", "true", 1);
+    checkLogin();
+  } else {
+    alert("Username atau password salah!");
+  }
+}
+
+function logout() {
+  setCookie("adminLogin", "false", -1);
+  location.reload();
+}
+
+// PRODUK
 let produk = [];
 
 async function fetchProduk() {
@@ -140,4 +185,5 @@ async function handleFormSubmit(e) {
   }
 }
 
-fetchProduk();
+// mulai cek login dan load produk
+checkLogin();
