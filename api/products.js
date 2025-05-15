@@ -1,8 +1,8 @@
 const https = require('https');
 
 const TOKEN = process.env.GITHUB_TOKEN;
-const REPO = 'Yudzxml/WebClientV1';          // langsung di-set sesuai repo kamu
-const FILEPATH = 'products.json';             // langsung di-set sesuai path file JSON
+const REPO = 'Yudzxml/WebClientV1';   // repo GitHub kamu
+const FILEPATH = 'products.json';      // path file JSON di repo
 const BRANCH = 'main';
 
 function githubRequest(path, method = 'GET', data = null) {
@@ -62,50 +62,71 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    console.log('[handler] Fetching file data from GitHub...');
     const fileData = await githubRequest(`/repos/${REPO}/contents/${FILEPATH}?ref=${BRANCH}`);
-    console.log('[handler] File data fetched, SHA:', fileData.sha);
+    const content = Buffer.from(fileData.content, 'base64').toString('utf8');
+    let produkList = JSON.parse(content);
 
     if (req.method === 'GET') {
-      console.log('[handler] Processing GET request');
-      const content = Buffer.from(fileData.content, 'base64').toString('utf8');
-      const produk = JSON.parse(content);
-      res.status(200).json(produk);
+      // Ambil daftar produk
+      res.status(200).json(produkList);
 
     } else if (req.method === 'POST') {
-      console.log('[handler] Processing POST request with body:', req.body);
+      // Tambah produk baru
       const produkBaru = req.body;
 
       if (!produkBaru || !produkBaru.nama || !produkBaru.img || !(produkBaru.paket || produkBaru.harga)) {
-        console.warn('[handler] Produk baru kurang lengkap');
-        res.status(400).json({ error: 'Produk baru kurang lengkap' });
-        return;
+        return res.status(400).json({ error: 'Produk baru kurang lengkap' });
       }
 
-      const content = Buffer.from(fileData.content, 'base64').toString('utf8');
-      const produkList = JSON.parse(content);
-
       produkList.push(produkBaru);
-      console.log('[handler] Produk list updated, new length:', produkList.length);
 
       const commitMessage = `Add produk: ${produkBaru.nama}`;
       const updatedContent = Buffer.from(JSON.stringify(produkList, null, 2)).toString('base64');
-
-      const updateData = {
-        message: commitMessage,
-        content: updatedContent,
-        sha: fileData.sha,
-        branch: BRANCH,
-      };
-
-      console.log('[handler] Sending update commit to GitHub...');
+      const updateData = { message: commitMessage, content: updatedContent, sha: fileData.sha, branch: BRANCH };
       await githubRequest(`/repos/${REPO}/contents/${FILEPATH}`, 'PUT', updateData);
-      console.log('[handler] Commit successful');
 
       res.status(200).json({ success: true, produkBaru });
 
+    } else if (req.method === 'PUT') {
+      // Update produk berdasarkan index
+      const updateProduk = req.body;
+
+      if (!updateProduk || typeof updateProduk.index !== 'number' || !updateProduk.data) {
+        return res.status(400).json({ error: 'Data produk update kurang lengkap atau index tidak valid' });
+      }
+
+      const idx = updateProduk.index;
+      if (idx < 0 || idx >= produkList.length) {
+        return res.status(400).json({ error: 'Index produk tidak ditemukan' });
+      }
+
+      produkList[idx] = { ...produkList[idx], ...updateProduk.data };
+
+      const commitMessage = `Update produk: ${produkList[idx].nama}`;
+      const updatedContent = Buffer.from(JSON.stringify(produkList, null, 2)).toString('base64');
+      const updateData = { message: commitMessage, content: updatedContent, sha: fileData.sha, branch: BRANCH };
+      await githubRequest(`/repos/${REPO}/contents/${FILEPATH}`, 'PUT', updateData);
+
+      res.status(200).json({ success: true, produk: produkList[idx] });
+
+    } else if (req.method === 'DELETE') {
+      // Hapus produk berdasarkan index
+      const { index } = req.body;
+
+      if (typeof index !== 'number' || index < 0 || index >= produkList.length) {
+        return res.status(400).json({ error: 'Index produk tidak valid' });
+      }
+
+      const produkHapus = produkList.splice(index, 1)[0];
+
+      const commitMessage = `Delete produk: ${produkHapus.nama}`;
+      const updatedContent = Buffer.from(JSON.stringify(produkList, null, 2)).toString('base64');
+      const updateData = { message: commitMessage, content: updatedContent, sha: fileData.sha, branch: BRANCH };
+      await githubRequest(`/repos/${REPO}/contents/${FILEPATH}`, 'PUT', updateData);
+
+      res.status(200).json({ success: true, produkHapus });
+
     } else {
-      console.warn('[handler] Method not allowed:', req.method);
       res.status(405).json({ error: 'Method not allowed' });
     }
   } catch (error) {
