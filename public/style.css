@@ -92,8 +92,7 @@ h1.neon {
 .img-wrapper img {
   display: block;
   width: 100%;
-  height: 140px;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 14px;
   background: var(--card-bg);
   box-shadow: 0 4px 12px rgba(10, 132, 255, 0.7);
