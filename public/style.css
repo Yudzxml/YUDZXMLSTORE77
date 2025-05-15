@@ -56,30 +56,33 @@ h1.neon {
 .card {
   background: var(--card-bg);
   border: 1px solid var(--accent2);
-  border-radius: 12px;
+  border-radius: 16px;      /* buat lebih melengkung */
   padding: 1rem;
-  box-shadow: 0 0 8px #0a84ff55;
+  box-shadow: 0 0 12px #0a84ff77; /* sedikit lebih nge-glow */
   text-align: center;
   transition: all 0.3s ease;
+  overflow: hidden;         /* supaya gambar nggak keluar batas */
 }
 
 .card:hover {
   transform: scale(1.06);
-  box-shadow: 0 0 15px var(--accent), 0 0 25px var(--accent2);
+  box-shadow: 0 0 20px var(--accent), 0 0 35px var(--accent2);
 }
 
 .card img {
-  width: auto;       /* Biarkan lebar sesuai proporsi asli */
-  height: auto;      /* Biarkan tinggi sesuai proporsi asli */
-  max-width: 100%;   /* Jangan lebih dari container */
-  max-height: 140px; /* Boleh batasi tinggi maksimal agar tidak terlalu besar */
-  background-color: #1a1a1a;
-  padding: 6px;
-  object-fit: none;  /* Jangan resize isi gambar */
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  filter: drop-shadow(0 0 3px var(--accent));
-  display: block;    /* Hilangkan space bawah gambar */
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 16px;        /* samakan dengan card */
+  margin-bottom: 0.8rem;
+  box-shadow: 0 6px 15px rgba(10, 132, 255, 0.6); /* efek “mengambang” */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+}
+
+.card img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(10, 132, 255, 0.85);
 }
 
 /* Tombol umum */
