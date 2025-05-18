@@ -37,10 +37,12 @@ h1.neon {
 }
 
 .subtitle {
+  font-size: 1rem;
+  margin-bottom: 1rem;
   text-align: center;
-  color: var(--text-muted);
-  opacity: 0.9;
-  margin-bottom: 2rem;
+  margin: 0.5rem 0;
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent), 0 0 12px var(--accent2);
 }
 
 /* Grid produk */
@@ -49,7 +51,7 @@ h1.neon {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 2rem auto;
 }
 
 /* Card produk */
@@ -96,6 +98,8 @@ h1.neon {
 
 /* Tombol umum */
 button {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   background: linear-gradient(45deg, var(--accent), var(--accent2));
   border: none;
   border-radius: 8px;
@@ -114,6 +118,28 @@ button:hover {
   box-shadow: 0 0 15px #0066ffbb, 0 0 30px #003d9977;
 }
 
+buttonTestimoni {
+  display: block;
+  margin: 2rem 70rem; /* Tombol berada di tengah dengan jarak atas-bawah */
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(45deg, var(--accent), var(--accent2));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px #0a84ff88;
+  transition: all 0.3s ease;
+}
+
+buttonTestimoni:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #0066ff, #003d99);
+  box-shadow: 0 0 15px #0066ffbb, 0 0 30px #003d9977;
+}
 /* Form checkout */
 .fullpage {
   position: fixed;
